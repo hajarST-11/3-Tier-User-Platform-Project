@@ -1,0 +1,36 @@
+
+name: qa-CICD.yml
+on:
+  push:
+    branches: [ "qa" ]
+    paths:
+     -client/**
+     -server/**
+     -.github/workflows/qa-CICD.yml
+   
+
+jobs:
+  gitleaks-scan:  #the Job ID for gitleaks
+    name: GitLeaks Scan  # name of the job
+    runs-on: ubuntu-latest
+    steps:
+      -name:
+    
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
