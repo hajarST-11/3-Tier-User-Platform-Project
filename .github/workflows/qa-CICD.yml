@@ -20,13 +20,13 @@ jobs:
       - name: Run Gitleaks Scan  #next step
         run: |  
           docker run --rm \
-            -v "${{ github.workspace }}:/repo" \       
+            -v "${{ github.workspace }}:/repo" \
             zricethezav/gitleaks:latest detect \
             --source=/repo \
-            --report-format=json \      
+            --report-format=json \
             --report-path=/repo/gitleaks-report.json \
-            --redact \                  
-            --exit-code 0                
+            --redact \
+            --exit-code 0              
         
        
       - name: Upload Gitleaks report
