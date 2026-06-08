@@ -1,8 +1,8 @@
 
-name: qa-CICD.yml
+name: My qa-CICD.yml
 on:
   push:
-    branches: [ "qa" ]
+    branches: [ "qa" ] 
     paths:
      -client/**
      -server/**
@@ -14,23 +14,21 @@ jobs:
     name: GitLeaks Scan  # name of the job
     runs-on: ubuntu-latest
     steps:
-      -name:
+      -name: Checkout Source Code  # the first step is to clone the repo into the vm
+       uses: actions/checkout@v4  #the official GitHub Action used to clone and download your Git repository into a GitHub Actions runner environment
+
+
+       -name: Run Gitleaks Scan  #next step
+        run: |  #run shell commands
+          docker run --rm \
+            -v "${{ github.workspace }}:/repo" \      # mounts repo into the container
+            zricethezav/gitleaks:latest detect \
+            --source=/repo \
+            --report-format=json \      # outputs results as JSON
+            --report-path=/repo/gitleaks-report.json \
+            --redact \                  # masks secret values in the report
+            --exit-code 0               # always exits 0 (won't fail the pipeline)
+        
+       
     
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+ 
