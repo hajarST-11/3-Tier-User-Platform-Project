@@ -14,11 +14,11 @@ jobs:
     name: GitLeaks Scan  # name of the job
     runs-on: ubuntu-latest
     steps:
-      -name: Checkout Source Code  # the first step is to clone the repo into the vm
-       uses: actions/checkout@v4  #the official GitHub Action used to clone and download your Git repository into a GitHub Actions runner environment
+      - name: Checkout Source Code  # the first step is to clone the repo into the vm
+        uses: actions/checkout@v4  #the official GitHub Action used to clone and download your Git repository into a GitHub Actions runner environment
 
 
-       -name: Run Gitleaks Scan  #next step
+      - name: Run Gitleaks Scan  #next step
         run: |  #run shell commands
           docker run --rm \
             -v "${{ github.workspace }}:/repo" \      # mounts repo into the container
