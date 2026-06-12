@@ -348,6 +348,13 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >  
+             -Dsonar.projectKey=3-Tier-User-Platform-Project
+             -Dsonar.projectName=3-Tier-User-Platform-Project
+             -Dsonar.projectVersion=1.0
+             -Dsonar.sources=.
+             -Dsonar.exclusions=**/node_modules/**
 
       # Check the Quality Gate status.
       - name: SonarQube Quality Gate check
