@@ -491,3 +491,4 @@ jobs:
           tags: |
             zozii/nodejs-app:${{ github.sha }}
             zozii/nodejs-app:latest    
+
